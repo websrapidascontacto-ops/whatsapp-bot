@@ -1,0 +1,76 @@
+#flow-editor-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f0f2f5;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+}
+
+.flow-header {
+  background: #212529;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#canvas-wrapper {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+  background: #e5ddd5;
+}
+
+#canvas-area {
+  width: 4000px;
+  height: 4000px;
+  position: relative;
+}
+
+.nodo {
+  position: absolute;
+  width: 260px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  background: white;
+}
+
+.nodo-header {
+  padding: 10px;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px 10px 0 0;
+}
+
+.trigger { background: #6f42c1; }
+.mensaje { background: #198754; }
+
+.nodo-body {
+  padding: 10px;
+}
+
+.port {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.port-in {
+  background: #0d6efd;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.port-out {
+  background: #198754;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+}
