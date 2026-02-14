@@ -12,6 +12,10 @@ const app = express();
 
 app.use(express.json());
 app.use(express.static("public"));
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/login.html");
+});
+
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Mongo conectado"))
