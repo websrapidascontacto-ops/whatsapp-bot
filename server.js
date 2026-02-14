@@ -1,45 +1,45 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-
+const express = require("express");
+const fs = require("fs");
 const app = express();
 
-// 🚀 MUY IMPORTANTE PARA RAILWAY
-const PORT = process.env.PORT || 3000;
-
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static("public"));
 
-const DATA_FOLDER = path.join(__dirname, 'data');
-const FLOW_FILE = path.join(DATA_FOLDER, 'flujos.json');
+app.post("/save-flow", (req, res) => {
+  const flow = req.body;
 
-// Crear carpeta data si no existe
-if (!fs.existsSync(DATA_FOLDER)) {
-  fs.mkdirSync(DATA_FOLDER);
+  const error = validarFlujo(flow);
+  if (error !== true) {
+    return res.status(400).json({ error });
+  }
+
+  fs.writeFileSync("flow.json", JSON.stringify(flow, null, 2));
+  res.json({ success: true });
+});
+
+function validarFlujo(flow) {
+  const { nodes, edges } = flow;
+
+  const startNodes = nodes.filter(n => n.type === "start");
+  if (startNodes.length !== 1)
+    return "Debe existir un solo nodo Inicio";
+
+  const connected = new Set();
+  edges.forEach(e => {
+    connected.add(e.from);
+    connected.add(e.to);
+  });
+
+  const orphan = nodes.filter(n =>
+    n.type !== "start" && !connected.has(n.id)
+  );
+
+  if (orphan.length > 0)
+    return "Hay nodos sin conectar";
+
+  return true;
 }
 
-// Crear archivo flujos.json si no existe
-if (!fs.existsSync(FLOW_FILE)) {
-  fs.writeFileSync(FLOW_FILE, JSON.stringify({ nodos: [], conexiones: [] }, null, 2));
-}
-
-// Guardar flujo
-app.post('/api/guardar-flujo', (req, res) => {
-  fs.writeFileSync(FLOW_FILE, JSON.stringify(req.body, null, 2));
-  res.json({ ok: true });
-});
-
-// Cargar flujo
-app.get('/api/cargar-flujo', (req, res) => {
-  const data = fs.readFileSync(FLOW_FILE, 'utf8');
-  res.json(JSON.parse(data));
-});
-
-// Ruta principal
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
-
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
-});
+app.listen(8080, () =>
+  console.log("Servidor corriendo en puerto 8080")
+);
