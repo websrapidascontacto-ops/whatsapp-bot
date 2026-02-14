@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-family: Inter, sans-serif;
   background: #f4f6fa;
+  overflow: hidden;
 }
 
 .topbar {
@@ -20,26 +21,48 @@ body {
   cursor: pointer;
 }
 
-#canvas {
+#workspace {
+  display: flex;
+  height: calc(100vh - 50px);
+}
+
+#canvas-wrapper {
+  flex: 1;
   position: relative;
-  height: 90vh;
+  overflow: hidden;
+}
+
+#grid {
+  position: absolute;
+  width: 3000px;
+  height: 3000px;
+  background-image:
+    linear-gradient(#e0e0e0 1px, transparent 1px),
+    linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 #connections {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 3000px;
+  height: 3000px;
   pointer-events: none;
+}
+
+#canvas {
+  position: absolute;
+  width: 3000px;
+  height: 3000px;
 }
 
 .node {
   position: absolute;
-  width: 260px;
+  width: 240px;
   background: white;
   border-radius: 14px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.08);
   padding: 14px;
-  cursor: move;
+  cursor: pointer;
 }
 
 .connector {
@@ -53,7 +76,19 @@ body {
   cursor: pointer;
 }
 
-.edge-delete {
-  fill: red;
-  cursor: pointer;
+#side-panel {
+  width: 320px;
+  background: white;
+  border-left: 1px solid #eee;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+#side-panel input,
+#side-panel textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }

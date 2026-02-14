@@ -14,8 +14,17 @@
   <button onclick="saveFlow()">Guardar</button>
 </div>
 
-<div id="canvas">
-  <svg id="connections"></svg>
+<div id="workspace">
+  <div id="canvas-wrapper">
+    <div id="grid"></div>
+    <svg id="connections"></svg>
+    <div id="canvas"></div>
+  </div>
+
+  <div id="side-panel">
+    <h3>Configuración</h3>
+    <div id="node-config"></div>
+  </div>
 </div>
 
 <script src="flow.js"></script>
